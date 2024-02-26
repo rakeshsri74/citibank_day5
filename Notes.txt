@@ -1,0 +1,89 @@
+1. Swagger UI:-
+    Swagger UI is a user-friendly interface for visualizing and intracting with APIs that are described using the swagger specification.It allows us to explore and test APIs without writing any code by providing a dynamically generated documentation interface.
+    
+2. Spring Boot Actuator:-
+Spring Boot Actuator is a set of production-ready features provided by spring boot for monitoring and managing your application in production,It indicates built-in endpoints(e.g, health,metrics,info) that expose valuable information about your application's internals,such as health status,metrics envoirenment properties, etc.
+
+Actuator endpoints are typically accessed via HTTP requests and provide insights into the runtime behaviour of your application.
+
+Actuator is used for monitoring,health check,metrics collection,logging configuration, etc.,and is often integrated into production environment for operational visibility.
+
+/actuator/health
+
+/actuator/info
+
+/actuator/metrics
+
+/actuator/loggers
+
+/actuator/env
+
+/actuator/beans
+
+/actuator.thread_dump
+
+-------------------------------------------------------------------------
+
+Secure Endpoints:
+
+Customize Endpoint Exposure:
+
+Spring Security
+
+spring.security.user.name=rps
+spring.security.user.password=alliswell
+spring.security.user.roles=ADMIN
+
+
+@Configuration
+@EnableWebSecurity
+public class WebSecurity {
+
+    @Bean
+    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception{
+        http.authorizeHttpRequests()
+        .requestMatchers("/actuator/**").hasRole("ADMIN")
+        .anyRequest().authenticated()
+        .and()
+        .httpBasic();
+        return http.build();
+    }
+}
+
+The above code defines a configuration class that is annotated with @Configuration and @EnableWebSecurity.
+The @Configuration annotation tells spring that this class provides configuration information that should be processed when the application starts up.
+
+The @EnableWebSecurity annotation tells spring to enable web security for the application.
+
+The WebSecurity class has a method annotated with @Bean called securityFilterChain.This method creates and returns SecurityFilterChain object that defines how request to the web application should be secured.
+
+The securityFilterChain method takes an HttpSecurity object as a parameter.This object is used to configure the security settings for the application.The HttpSecurity object allows to define which requests are allowed and which requests require authentication.
+
+The first method call on the HttpSecurity object is authorizeHttpRequests(),which is used to configure authorization rules for incoming requests.
+
+The next method call on HttpSecurity onbject is requestMatchers("/actuator/**").hasRole("ADMIN").This method call specifies that requests to the path "/actuator/**" require the "ADMIN" role to be authorized.
+
+The next method call on the HttpSecurity object is anyRequest().authenticated().This method call specifies that any request that does not match the previous rule should be authenticated.
+
+The last method call on HttpSecurity object is httpBasic(),which specifies that Http Basic authentication should be used for authentication.
+
+Finally the http.build() method is called to build the SecurityFilterChain object and return it.
+
+---------------------------------------------------------------------------------------------------------------
+
+4. Define Custom Metrics:-
+
+5.Define Custom health indicators---
+
+https://collabedit.com/52hek
+
+https://github.com/rakeshsri74/citibank_day5
+
+
+
+
+
+
+
+
+
